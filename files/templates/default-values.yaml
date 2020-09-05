@@ -1,0 +1,6 @@
+#@data/values
+---
+acme_dns:
+    namespace: acme-dns
+    create_namespace: True
+    # ingress: false

@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: acmedns
+  name: acmedns
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: acmedns
+    spec:
+      containers:
+      - image: joohoi/acme-dns:latest
+        name: acmedns
+        ports:
+        - containerPort: 443
+        - containerPort: 53
+        - containerPort: 53
+          protocol: UDP
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/acme-dns
+          name: acmedns-claim0
+          readOnly: true
+        - mountPath: /var/lib/acme-dns
+          name: acmedns-claim1
+      restartPolicy: Always
+      volumes:
+      - name: acmedns-claim0
+        persistentVolumeClaim:
+          claimName: acmedns-claim0
+          readOnly: true
+      - name: acmedns-claim1
+        persistentVolumeClaim:
+          claimName: acmedns-claim1
+status: {}
