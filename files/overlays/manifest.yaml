@@ -1,0 +1,35 @@
+#@ load("@ytt:overlay", "overlay")
+
+# Use configMap for configuration file instead of pv
+#@overlay/match by=overlay.map_key("kind"),when=1
+---
+kind: Deployment
+spec:
+    template:
+        spec:
+            volumes:
+                #@overlay/match by=overlay.map_key("name")
+                - name: acmedns-claim0
+                  #@overlay/remove
+                  persistentVolumeClaim:
+                  #@overlay/match missing_ok=True
+                  configMap:
+                      name: acme-dns-config
+            #@overlay/remove
+            serviceAccountName: ""
+            containers:
+            #@overlay/match by=overlay.map_key("name")
+            - name: acmedns
+              #@overlay/remove
+              imagePullPolicy: ""
+
+#@overlay/remove
+status: {}
+
+# Remove claim that is no longer needed
+#@ is_pvc = overlay.subset({"kind": "PersistentVolumeClaim"})
+#@ is_claim0 = overlay.subset({"metadata": {"name" : "acmedns-claim0" }})
+
+#@overlay/match by=overlay.and_op(is_pvc, is_claim0),when=1
+#@overlay/remove
+---

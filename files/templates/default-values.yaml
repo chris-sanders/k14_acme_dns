@@ -3,4 +3,7 @@
 acme_dns:
     namespace: acme-dns
     create_namespace: True
+    domain: "auth.example.com"
+    email: "admin.auth.example.com"
+    public_ip: "127.0.0.1"
     # ingress: false

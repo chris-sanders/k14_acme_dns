@@ -1,6 +1,8 @@
 ---
 k14:
   app: acme-dns
+  kompose_repo: https://github.com/joohoi/acme-dns.git
+  kompose_file: docker-compose.yml
   #helm_repo: https://github.com/chris-sanders/helm-bitwarden_rs.git
   #helm_ref: helm3
   #helm_path: charts/bitwarden/
