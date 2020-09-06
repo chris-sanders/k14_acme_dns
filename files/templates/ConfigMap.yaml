@@ -30,7 +30,7 @@ data:
     # predefined records served in addition to the TXT
     records = [
         # domain pointing to the public IP of your acme-dns server 
-        #"(@= data.values.acme_dns.domain @). A (@= data.values.acme_dns.public_ip @)",
+        "(@= data.values.acme_dns.domain @). A (@= data.values.acme_dns.public_ip @)",
         # specify that auth.example.org will resolve any *.auth.example.org records
         "(@= data.values.acme_dns.domain @). NS (@= data.values.acme_dns.domain @).",
     ]
